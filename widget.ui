@@ -24,7 +24,7 @@
           <item>
            <widget class="QLabel" name="label_ClientInput">
             <property name="text">
-             <string>Client Input</string>
+             <string>Input</string>
             </property>
            </widget>
           </item>
@@ -86,14 +86,20 @@
           <item>
            <widget class="QLabel" name="label_ServerOutput">
             <property name="text">
-             <string>Server Output</string>
+             <string>Output</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="lineEdit_ServerCmd">
+            <property name="inputMask">
+             <string/>
+            </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="placeholderText">
+             <string>LSP Server Command</string>
             </property>
            </widget>
           </item>
@@ -107,7 +113,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
+         <widget class="QPlainTextEdit" name="plainTextEdit_Output">
           <property name="enabled">
            <bool>true</bool>
           </property>
