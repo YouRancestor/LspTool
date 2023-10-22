@@ -107,7 +107,8 @@ int LspServerProxy::Init()
     STARTUPINFOA si = { 0 };
     si.cb = sizeof(STARTUPINFOA);
     GetStartupInfoA(&si);
-    si.dwFlags = STARTF_USESTDHANDLES;
+    si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+    si.wShowWindow = SW_HIDE;
     si.hStdInput = InputRead;
     si.hStdError = OutputWrite;
     si.hStdOutput = OutputWrite;
@@ -202,18 +203,8 @@ void LspServerProxy::SetCallback(FunOnSvrExit OnSvrExit, void* Opaque)
 
 void LspServerProxy::OnDataRecv(const char* data, size_t len)
 {
-    BuffRecv.append(data, len);
-    // '\n'分割，得到Message，回调
-    size_t start = 0;
-    auto end = BuffRecv.find('\n');
-    while (end != std::string::npos)
+    if (MsgRecvCb)
     {
-        if (MsgRecvCb)
-        {
-            MsgRecvCb(&BuffRecv[start], end - start, MsgRecvCbOpaque);
-        }
-        start = end + 1;
-        end = BuffRecv.find('\n', start);
+        MsgRecvCb(data, len, MsgRecvCbOpaque);
     }
-    BuffRecv = BuffRecv.substr(start);
 }
