@@ -10,6 +10,9 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
     ui->tabWidget->addTab(new QPlainTextEdit, "0");
 
+    auto pid = GetCurrentProcessId();
+    ui->label_PID->setText(QString::asprintf("PID: %d", pid));
+
     connect(this, &Widget::MessageReceived, ui->plainTextEdit_Output, &QPlainTextEdit::appendPlainText, Qt::QueuedConnection);
     connect(this, &Widget::ServerExited, this, [this](int exit_code){
         QString str = QString::asprintf("\nServer exit with code %d.\n", exit_code);
